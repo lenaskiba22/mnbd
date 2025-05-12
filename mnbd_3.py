@@ -5,26 +5,25 @@ import numpy as np
 # Przygotowanie danych
 X = np.array([[1], [2], [3], [4]])
 y = np.array([2, 4, 5, 4])
-# Tworzenie modelu
-alpha = 0.1 # Parametr regularyzacji
-l1_ratio = 0.5 # Proporcja kary L1 w stosunku do kary L2
+alpha = 0.1 #parametr regularyzacji
+l1_ratio = 0.5 #proporcja kary L1 w stosunku do kary L2
 model = ElasticNet(alpha=alpha, l1_ratio=l1_ratio)
-# Dopasowanie modelu do danych
+#dopasowanie modelu do danych
 model.fit(X, y)
-# Przewidywanie wartości
 X_test = np.array([[5]])
 y_pred = model.predict(X_test)
 print("Przewidywana wartość dla X_test:", y_pred)
 
 from sklearn.svm import SVR
-# Przygotowanie danych
 X = np.array([[1], [2], [3], [4]])
 y = np.array([2, 4, 5, 4])
-# Tworzenie modelu
+
+
+#tworzenie modelu
 model = SVR(kernel='linear')
-# Dopasowanie modelu do danych
+#dopasowanie modelu do danych
 model.fit(X, y)
-# Przewidywanie wartości
+#przewidywanie wartości
 X_test = np.array([[5]])
 y_pred = model.predict(X_test)
 print("Przewidywana wartość dla X_test:", y_pred)
@@ -47,10 +46,10 @@ import random
 def generate_data(N):
     data = []
     for _ in range(N):
-        area = random.randint(50, 120)  # Powierzchnia mieszkania
-        rooms = random.randint(1, 5)  # Liczba pokoi
-        floor = random.randint(1, 10)  # Piętro
-        year_of_construction = random.randint(1950, 2022)  # Rok budowy
+        area = random.randint(50, 120)  #powierzchnia mieszkania
+        rooms = random.randint(1, 5)  #l pokoi
+        floor = random.randint(1, 10)  #piętro
+        year_of_construction = random.randint(1950, 2022)  #rok budowy
 
         #żeby cena zależała od powierzchni
         base_price_per_m2 = random.randint(3000, 10000)  # Cena za m²
@@ -120,7 +119,7 @@ mse_4 = mean_squared_error(yTest, y_pred)
 r_4 = r2_score(yTest, y_pred)
 print("Mse wynosi", mse_4)
 print("R2 wynosi", r_4)
-#to poprawić wyżej
+
 if r_4 < 0:
     print('Model działa gorzej niż losowe przewidywanie średniej wartości.')
 elif r_4 > 0.8:
@@ -142,32 +141,30 @@ print('Zadanie 5\n')
 from sklearn.linear_model import Ridge
 from sklearn.linear_model import Lasso
 from sklearn.model_selection import train_test_split
-# Wczytanie danych
+
 df = pd.read_csv('C:/Users/Magda/Desktop/time_n,temperature,energy_consumpti.csv')
 
-# Konwersja czasu na liczby
+#konwersja czasu na liczby
 df['time_n'] = pd.to_datetime(df['time_n'])
 df['time_n'] = df['time_n'].map(pd.Timestamp.toordinal)
 
-# Definiowanie zmiennych
+#zdefiniowanie zmiennych
 x = df[['time_n', 'temperature']]
 y = df['energy_consumption']
-
-# Podział na zbiór treningowy i testowy
 xTrain, xTest, yTrain, yTest = train_test_split(x, y, test_size=0.2, random_state=0)
 
-# Regresja grzbietowa
+#regresja grzbietowa
 alpha = 0.1
 model_ridge = Ridge(alpha=alpha)
 model_ridge.fit(xTrain, yTrain)
 y_pred_ridge = model_ridge.predict(xTest)
 
-# Regresja liniowa
+#regresja liniowa
 model_linear = LinearRegression()
 model_linear.fit(xTrain, yTrain)
 y_pred_linear = model_linear.predict(xTest)
 
-# Ocena modeli
+#metody ocena modeli
 mse_ridge = mean_squared_error(yTest, y_pred_ridge)
 r2_ridge = r2_score(yTest, y_pred_ridge)
 print("Regresja grzbietowa - MSE:", mse_ridge, "R2:", r2_ridge)
@@ -190,7 +187,7 @@ plt.show()
 print("Zadanie 6\n")
 from sklearn.svm import SVR
 
-df = pd.read_csv("C:/Users/Magda/Desktop/wiek,BMI,cisnienie_krwi,poziom_gluk.csv")
+df = pd.read_csv("wiek,BMI,cisnienie_krwi,poziom_gluk.csv")
 print(df.head(5))
 x = df[['wiek', 'BMI', 'cisnienie_krwi', 'poziom_glukozy', 'cholesterol', 'kretynina']]
 y = df['czas_przezycia']
@@ -232,7 +229,7 @@ mse_regresja = mean_squared_error(yTest, y_pred_regresja)
 r2_regresja = r2_score(yTest, y_pred_regresja)
 
 print("Wyniki dla klasycznej regresji: mse", mse_regresja,"r_2", r2_regresja)
-# '''Klasyczne metody regresji lepiej dopasowywują się do danych-niższe mse wychodzi'''
+'''Klasyczne metody regresji lepiej dopasowywują się do danych-niższe mse wychodzi'''
 plt.scatter(yTest, y_pred_grzbiet, color='black', label='Regresja grzbietowa',alpha=0.3)
 plt.scatter(yTest, y_pred_regresja, color='pink', label='Regresja liniowa', alpha=0.3)
 plt.scatter(yTest, y_pred, color = 'yellow', label = 'Regresja SVR', alpha=0.3)
